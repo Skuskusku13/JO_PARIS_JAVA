@@ -101,6 +101,13 @@ public class VueInscriptionPart extends JFrame implements ActionListener, KeyLis
 		this.btRetour.addActionListener(this);
 		this.btQuitter.addActionListener(this);
 		
+		// définir la police de chaque bouton
+		this.txtNom.setFont(new Font("Paris2024", Font.ITALIC, 18));
+		this.txtEmail.setFont(new Font("Paris2024", Font.ITALIC, 18));
+		this.txtPrenom.setFont(new Font("Paris2024", Font.ITALIC, 18));
+		this.txtTel.setFont(new Font("Paris2024", Font.ITALIC, 18));
+		
+		
 		this.setVisible(false);
 	}
 	
@@ -151,7 +158,7 @@ public class VueInscriptionPart extends JFrame implements ActionListener, KeyLis
 			JO_PARIS.gererVueConnexion(true);
 			VueConnexion.activerPanel(0);
 		} else if(e.getSource() == this.btQuitter) {
-			this.dispose();
+			System.exit(0);
 		}
 		
 	}

@@ -168,7 +168,7 @@ public class VueInscriptionPro extends JFrame implements ActionListener, KeyList
 			JO_PARIS.gererVueConnexion(true);
 			VueConnexion.activerPanel(0);
 		} else if(e.getSource() == this.btQuitter) {
-			this.dispose();
+			System.exit(0);
 		} 
 		
 	}

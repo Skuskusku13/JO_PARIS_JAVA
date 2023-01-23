@@ -168,7 +168,7 @@ public class VueConnexion extends JFrame implements ActionListener, KeyListener{
 			dispose();
 			activerPanel(2);
 		} else if(e.getSource() == this.btQuitter) {
-			this.dispose();
+			System.exit(0);
 		}
 
 		
