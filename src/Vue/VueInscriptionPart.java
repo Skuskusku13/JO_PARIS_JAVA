@@ -1,6 +1,7 @@
 package Vue;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -46,7 +47,7 @@ public class VueInscriptionPart extends JFrame implements ActionListener, KeyLis
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setBackground(new Color(255, 255, 204));
-		this.setBounds(350, 20, 700, 700);
+		this.setBounds(350, 20, 700, 750);
 		this.setLayout(null);
 		
 		// ajout du logo
@@ -58,38 +59,38 @@ public class VueInscriptionPart extends JFrame implements ActionListener, KeyLis
 		// Construction du panel de connection
 		
 		
-		this.panelInscription.setBounds(100, 300, 500, 200);
+		this.panelInscription.setBounds(100, 300, 500, 300);
 		this.panelInscription.setBackground(new Color(255, 255, 204));
 		this.panelInscription.setLayout(new GridLayout(7, 2));
 		
-		this.panelInscription.add(new JLabel("Nom"));
+		this.panelInscription.add(new JLabel("Nom")).setFont(new Font("Paris2024", Font.ITALIC, 18));
 		this.panelInscription.add(this.txtNom);
 		
-		this.panelInscription.add(new JLabel("Prenom"));
+		this.panelInscription.add(new JLabel("Prenom")).setFont(new Font("Paris2024", Font.ITALIC, 18));
 		this.panelInscription.add(this.txtPrenom);
 		
-		this.panelInscription.add(new JLabel("Email"));
+		this.panelInscription.add(new JLabel("Email")).setFont(new Font("Paris2024", Font.ITALIC, 18));
 		this.panelInscription.add(this.txtEmail);
 		
-		this.panelInscription.add(new JLabel("Password"));
+		this.panelInscription.add(new JLabel("Password")).setFont(new Font("Paris2024", Font.ITALIC, 18));
 		this.panelInscription.add(this.txtMdp);
 		
-		this.panelInscription.add(new JLabel("Telephone"));
+		this.panelInscription.add(new JLabel("Telephone")).setFont(new Font("Paris2024", Font.ITALIC, 18));
 		this.panelInscription.add(this.txtTel);
 		
-		this.panelInscription.add(this.btAnnuler);
-		this.panelInscription.add(this.btInscription);
+		this.panelInscription.add(this.btAnnuler).setFont(new Font("Paris2024", Font.ITALIC, 18));
+		this.panelInscription.add(this.btInscription).setFont(new Font("Paris2024", Font.ITALIC, 18));
 		
 		this.add(panelInscription);
 		
 		// panel des boutons retour et quitter
 		
-		this.panelButtonAction.setBounds(100, 600, 500, 50);
+		this.panelButtonAction.setBounds(275, 600, 150, 80);
 		this.panelButtonAction.setBackground(new Color(255, 255, 204));
-		this.panelButtonAction.setLayout(new GridLayout(1, 2));
+		this.panelButtonAction.setLayout(new GridLayout(2, 1));
 		
-		this.panelButtonAction.add(this.btRetour);
-		this.panelButtonAction.add(this.btQuitter);
+		this.panelButtonAction.add(this.btRetour).setFont(new Font("Paris2024", Font.ITALIC, 18));
+		this.panelButtonAction.add(this.btQuitter).setFont(new Font("Paris2024", Font.ITALIC, 18));
 		this.add(panelButtonAction);
 		
 		
@@ -127,7 +128,8 @@ public class VueInscriptionPart extends JFrame implements ActionListener, KeyLis
 				);
 				
 				if(retour == 0 || retour == 1) {
-					VueConnexion.activerPanel(1);
+					JO_PARIS.gererVueConnexion(true);
+					VueConnexion.activerPanel(0);
 				}
 				
 			}
@@ -147,9 +149,9 @@ public class VueInscriptionPart extends JFrame implements ActionListener, KeyLis
 			
 		} else if(e.getSource() == this.btRetour) {
 			JO_PARIS.gererVueConnexion(true);
-			VueConnexion.activerPanel(1);
+			VueConnexion.activerPanel(0);
 		} else if(e.getSource() == this.btQuitter) {
-			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			this.dispose();
 		}
 		
 	}

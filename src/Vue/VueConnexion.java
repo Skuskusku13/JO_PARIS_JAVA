@@ -1,6 +1,7 @@
 package Vue;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,22 +30,24 @@ public class VueConnexion extends JFrame implements ActionListener, KeyListener{
 	private JButton btClientPro = new JButton("Inscription Client Pro");
 	private JButton btAnnuler = new JButton("Annuler");
 	private JButton btSeConnecter = new JButton("Se Connecter");
+	private JButton btQuitter= new JButton("Quitter");
 	
 	private JPanel panelConnexion = new JPanel();
 	private JPanel panelInscriptions = new JPanel();
+	private JPanel panelQuitter = new JPanel();
 	
-	private static VueConnexion uneVueConnexion = new VueConnexion();
 	private static VueInscriptionPart uneInscriptionPart = new VueInscriptionPart();
 	private static VueInscriptionPro uneInscriptionPro = new VueInscriptionPro();
 	
 	
 	public VueConnexion() {
 		
+		
 		this.setTitle("Programme java JO PARIS 2024");
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setBackground(new Color(255, 255, 204));
-		this.setBounds(350, 20, 700, 700);
+		this.setBounds(350, 20, 700, 750);
 		this.setLayout(null);
 		
 		ImageIcon logo = new ImageIcon("src/images/JOPARIS.png");
@@ -57,27 +60,41 @@ public class VueConnexion extends JFrame implements ActionListener, KeyListener{
 		this.panelConnexion.setBackground(new Color(255, 255, 204));
 		this.panelConnexion.setLayout(new GridLayout(3, 2));
 		
-		this.panelConnexion.add(new JLabel("Email"));
-		this.panelConnexion.add(this.txtEmail);
+		this.panelConnexion.add(new JLabel("Email")).setFont(new Font("Paris2024", Font.ITALIC, 18));
+		this.panelConnexion.add(this.txtEmail).setFont(new Font("Paris2024", Font.ITALIC, 18));
 		
-		this.panelConnexion.add(new JLabel("Password"));
-		this.panelConnexion.add(this.txtMdp);
+		this.panelConnexion.add(new JLabel("Password")).setFont(new Font("Paris2024", Font.ITALIC, 18));
+		this.panelConnexion.add(this.txtMdp).setFont(new Font("Paris2024", Font.ITALIC, 18));
 		
-		this.panelConnexion.add(this.btAnnuler);
-		this.panelConnexion.add(this.btSeConnecter);
+		this.panelConnexion.add(this.btAnnuler).setFont(new Font("Paris2024", Font.ITALIC, 18));
+		this.panelConnexion.add(this.btSeConnecter).setFont(new Font("Paris2024", Font.ITALIC, 18));
+		
+		
+				
 		
 		this.add(panelConnexion);
 		
 		
 		// construction du panel d'inscriptons
-		this.panelInscriptions.setBounds(250, 550, 200, 100);
+		this.panelInscriptions.setBounds(125, 550, 450, 50);
 		this.panelInscriptions.setBackground(new Color(255, 255, 204));
-		this.panelInscriptions.setLayout(new GridLayout(2, 1));
+		this.panelInscriptions.setLayout(new GridLayout(1, 2));
 		
-		this.panelInscriptions.add(this.btClientPart);
-		this.panelInscriptions.add(this.btClientPro);
+		this.panelInscriptions.add(this.btClientPart).setFont(new Font("Paris2024", Font.ITALIC, 18));
+		this.panelInscriptions.add(this.btClientPro).setFont(new Font("Paris2024", Font.ITALIC, 18));
 		
 		this.add(panelInscriptions);
+		
+		
+		// construction du panel pour quitter
+		this.panelQuitter.setBounds(300, 650, 100, 50);
+		this.panelQuitter.setBackground(new Color(255, 255, 204));
+		this.panelQuitter.setLayout(new GridLayout(1, 1));
+		
+		this.panelQuitter.add(this.btQuitter).setFont(new Font("Paris2024", Font.ITALIC, 18));
+		
+		this.add(panelQuitter);
+		
 		
 		
 		// rendre les deux boutons (Annuler, Se Connecter) écoutables
@@ -87,10 +104,15 @@ public class VueConnexion extends JFrame implements ActionListener, KeyListener{
 		this.btClientPart.addActionListener(this);
 		this.btClientPro.addActionListener(this);
 		
+		this.btQuitter.addActionListener(this);
+		
 		// rendre les evenements de touches ecoutables lorsqu'on est sur l'un des JLabel
 		// entree pour valider la connexion par exemple
 		this.txtEmail.addKeyListener(this);
 		this.txtMdp.addKeyListener(this);
+		
+		
+		
 		
 		
 		this.setVisible(true);
@@ -121,14 +143,13 @@ public class VueConnexion extends JFrame implements ActionListener, KeyListener{
 	
 	
 	public static void activerPanel(int choix) {
-		uneVueConnexion.setVisible(false);
 		uneInscriptionPart.setVisible(false);
 		uneInscriptionPro.setVisible(false);
 		
 		switch(choix) {
-		case 1: uneVueConnexion.setVisible(true); break;
-		case 2: uneInscriptionPart.setVisible(true); break;
-		case 3: uneInscriptionPro.setVisible(true); break;
+		case 0: break;
+		case 1: uneInscriptionPart.setVisible(true); break;
+		case 2: uneInscriptionPro.setVisible(true); break;
 		}
 	}
 	
@@ -142,10 +163,12 @@ public class VueConnexion extends JFrame implements ActionListener, KeyListener{
 			this.traitement();
 		} else if(e.getSource() == this.btClientPart) {
 			dispose();
-			activerPanel(2);
+			activerPanel(1);
 		} else if(e.getSource() == this.btClientPro) {
 			dispose();
-			activerPanel(3);
+			activerPanel(2);
+		} else if(e.getSource() == this.btQuitter) {
+			this.dispose();
 		}
 
 		
