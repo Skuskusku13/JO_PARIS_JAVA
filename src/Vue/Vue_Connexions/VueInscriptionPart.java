@@ -1,4 +1,4 @@
-package Vue;
+package Vue.Vue_Connexions;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -85,7 +85,7 @@ public class VueInscriptionPart extends JFrame implements ActionListener, KeyLis
 		
 		// panel des boutons retour et quitter
 		
-		this.panelButtonAction.setBounds(275, 600, 150, 80);
+		this.panelButtonAction.setBounds(250, 600, 200, 80);
 		this.panelButtonAction.setBackground(new Color(255, 255, 204));
 		this.panelButtonAction.setLayout(new GridLayout(2, 1));
 		

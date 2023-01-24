@@ -1,8 +1,8 @@
 package Controleur;
 
-import Vue.VueConnexion;
-import Vue.VueInscriptionPart;
-import Vue.VueInscriptionPro;
+import Vue.Vue_Connexions.VueConnexion;
+import Vue.Vue_Connexions.VueInscriptionPart;
+import Vue.Vue_Connexions.VueInscriptionPro;
 
 public class JO_PARIS {
 

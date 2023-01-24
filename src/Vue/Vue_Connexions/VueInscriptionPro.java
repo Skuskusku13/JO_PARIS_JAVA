@@ -1,4 +1,4 @@
-package Vue;
+package Vue.Vue_Connexions;
 
 import java.awt.Color;
 import java.awt.Font;

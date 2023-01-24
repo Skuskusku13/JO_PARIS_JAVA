@@ -1,4 +1,4 @@
-package Vue;
+package Vue.Vue_Connexions;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -26,11 +26,23 @@ public class VueConnexion extends JFrame implements ActionListener, KeyListener{
 	private JTextField txtEmail = new JTextField("");
 	private JPasswordField txtMdp = new JPasswordField("");
 	
-	private JButton btClientPart = new JButton("Inscription Client Particulier");
-	private JButton btClientPro = new JButton("Inscription Client Pro");
-	private JButton btAnnuler = new JButton("Annuler");
-	private JButton btSeConnecter = new JButton("Se Connecter");
-	private JButton btQuitter= new JButton("Quitter");
+	// création d'une list pour le texte des boutons
+	private String[] boutonsText = {
+			"Inscription Client Particulier",
+			"Inscription Client Pro",
+			"Annuler",
+			"Se Connecter",
+			"Quitter"
+	};
+	
+	// création d'une list pour le nom des boutons
+	private String[] boutonsNames = {
+			"btClientPart",
+			"btClientPro",
+			"btAnnuler",
+			"btSeConnecter",
+			"btQuitter"
+	};
 	
 	private JPanel panelConnexion = new JPanel();
 	private JPanel panelInscriptions = new JPanel();
@@ -41,7 +53,6 @@ public class VueConnexion extends JFrame implements ActionListener, KeyListener{
 	
 	
 	public VueConnexion() {
-		
 		
 		this.setTitle("Programme java JO PARIS 2024");
 		this.setResizable(false);
@@ -65,12 +76,7 @@ public class VueConnexion extends JFrame implements ActionListener, KeyListener{
 		
 		this.panelConnexion.add(new JLabel("Password")).setFont(new Font("Paris2024", Font.ITALIC, 18));
 		this.panelConnexion.add(this.txtMdp).setFont(new Font("Paris2024", Font.ITALIC, 18));
-		
-		this.panelConnexion.add(this.btAnnuler).setFont(new Font("Paris2024", Font.ITALIC, 18));
-		this.panelConnexion.add(this.btSeConnecter).setFont(new Font("Paris2024", Font.ITALIC, 18));
-		
-		
-				
+					
 		
 		this.add(panelConnexion);
 		
@@ -80,31 +86,36 @@ public class VueConnexion extends JFrame implements ActionListener, KeyListener{
 		this.panelInscriptions.setBackground(new Color(255, 255, 204));
 		this.panelInscriptions.setLayout(new GridLayout(1, 2));
 		
-		this.panelInscriptions.add(this.btClientPart).setFont(new Font("Paris2024", Font.ITALIC, 18));
-		this.panelInscriptions.add(this.btClientPro).setFont(new Font("Paris2024", Font.ITALIC, 18));
-		
 		this.add(panelInscriptions);
-		
 		
 		// construction du panel pour quitter
 		this.panelQuitter.setBounds(300, 650, 100, 50);
 		this.panelQuitter.setBackground(new Color(255, 255, 204));
 		this.panelQuitter.setLayout(new GridLayout(1, 1));
 		
-		this.panelQuitter.add(this.btQuitter).setFont(new Font("Paris2024", Font.ITALIC, 18));
-		
 		this.add(panelQuitter);
 		
 		
-		
-		// rendre les deux boutons (Annuler, Se Connecter) écoutables
-		this.btAnnuler.addActionListener(this);
-		this.btSeConnecter.addActionListener(this);
-		
-		this.btClientPart.addActionListener(this);
-		this.btClientPro.addActionListener(this);
-		
-		this.btQuitter.addActionListener(this);
+		// boucles d'ajouts des boutons 
+		for (int i = 0; i < boutonsNames.length; i++) {
+			JButton jb = new JButton();
+			jb.setName(boutonsNames[i]);
+			jb.setText(boutonsText[i]);
+			jb.setFont(new Font("Paris2024", Font.ITALIC, 18));
+//			création de setactioncommand avec le nom des boutons pour le recuperer dans la fonction actionperformed
+			jb.addActionListener(this);
+			jb.setActionCommand(boutonsNames[i]);
+			
+			if (jb.getName() == boutonsNames[0] || jb.getName() == boutonsNames[1]) {
+				this.panelInscriptions.add(jb);
+			} else if(jb.getName() == boutonsNames[4]) {
+				jb.addActionListener(this);
+				this.panelQuitter.add(jb);
+			} else {
+				jb.addActionListener(this);
+				this.panelConnexion.add(jb);
+			}	
+		}
 		
 		// rendre les evenements de touches ecoutables lorsqu'on est sur l'un des JLabel
 		// entree pour valider la connexion par exemple
@@ -118,12 +129,16 @@ public class VueConnexion extends JFrame implements ActionListener, KeyListener{
 		this.setVisible(true);
 	}
 	
+
 	public void traitement() {
 		String email = this.txtEmail.getText();
 		String mdp = new String (this.txtMdp.getPassword());
 		
 		if(email.equals("") || mdp.equals("")) {
-			JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs !", "Champs vide", JOptionPane.YES_OPTION);
+			JOptionPane.showMessageDialog(this, 
+			"Veuillez remplir tous les champs !",
+			"Champs vide", 
+			JOptionPane.ERROR_MESSAGE);
 		} else {
 			// verification dans la bdd
 			User unUser = C_User.selectWhereUser(email, mdp);
@@ -135,6 +150,7 @@ public class VueConnexion extends JFrame implements ActionListener, KeyListener{
 				this.txtMdp.setText("");
 				
 				//ouverture de la session
+				// changer l"argument quand les pages seront créées
 				activerPanel(1);
 			}
 		}
@@ -153,25 +169,32 @@ public class VueConnexion extends JFrame implements ActionListener, KeyListener{
 		}
 	}
 	
-	
+//	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == this.btAnnuler) {
+		
+		String command = e.getActionCommand();
+		
+		switch (command) {
+		case "btSeConnecter":
+			this.traitement();
+			break;
+		case "btAnnuler":
 			this.txtEmail.setText("");
 			this.txtMdp.setText("");
-		} else if (e.getSource() == this.btSeConnecter) {
-			this.traitement();
-		} else if(e.getSource() == this.btClientPart) {
-			dispose();
+			break;
+		case "btClientPart":
+			this.dispose();
 			activerPanel(1);
-		} else if(e.getSource() == this.btClientPro) {
-			dispose();
+			break;
+		case "btClientPro":
+			this.dispose();
 			activerPanel(2);
-		} else if(e.getSource() == this.btQuitter) {
+			break;	
+		case "btQuitter":
 			System.exit(0);
 		}
-
-		
+	
 	}
 
 	@Override
@@ -179,20 +202,15 @@ public class VueConnexion extends JFrame implements ActionListener, KeyListener{
 		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
 			this.traitement();
 		}
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 
