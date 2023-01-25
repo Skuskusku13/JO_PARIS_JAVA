@@ -19,6 +19,8 @@ import javax.swing.JTextField;
 
 import Controleur.C_User;
 import Controleur.User;
+import Vue.VuePanel.PanelPrincipal;
+import Vue.VuePanel.VueGenerale;
 
 public class VueConnexion extends JFrame implements ActionListener, KeyListener{
 
@@ -50,7 +52,7 @@ public class VueConnexion extends JFrame implements ActionListener, KeyListener{
 	
 	private static VueInscriptionPart uneInscriptionPart = new VueInscriptionPart();
 	private static VueInscriptionPro uneInscriptionPro = new VueInscriptionPro();
-	
+	private static VueGenerale uneVueGenerale = new VueGenerale();
 	
 	public VueConnexion() {
 		
@@ -145,7 +147,7 @@ public class VueConnexion extends JFrame implements ActionListener, KeyListener{
 				
 				//ouverture de la session
 				// changer l"argument quand les pages seront créées
-				activerPanel(1);
+				activerPanel(3);
 			}
 		}
 		
@@ -155,11 +157,13 @@ public class VueConnexion extends JFrame implements ActionListener, KeyListener{
 	public static void activerPanel(int choix) {
 		uneInscriptionPart.setVisible(false);
 		uneInscriptionPro.setVisible(false);
+		uneVueGenerale.setVisible(false);
 		
 		switch(choix) {
 		case 0: break;
 		case 1: uneInscriptionPart.setVisible(true); break;
 		case 2: uneInscriptionPro.setVisible(true); break;
+		case 3: uneVueGenerale.setVisible(true); break;
 		}
 	}
 	
@@ -171,6 +175,7 @@ public class VueConnexion extends JFrame implements ActionListener, KeyListener{
 		
 		switch (command) {
 		case "btSeConnecter":
+			this.dispose();
 			this.traitement();
 			break;
 			

@@ -7,8 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.UnsupportedEncodingException;
-import java.util.Iterator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -121,8 +119,8 @@ public class VueInscriptionPart extends JFrame implements ActionListener, KeyLis
 	public void traitement() {
 		
 		String mdp = new String(this.txtMdp.getPassword());
-//		String nom = new String(nom);
-		
+//		String nom = new String(jtfNames[0].getText());
+
 		for (int i = 0; i < jlText.length; i++) {
 			String a = jtfNames[i];
 //			a.valueOf(jtfNames[i]);
@@ -150,7 +148,7 @@ public class VueInscriptionPart extends JFrame implements ActionListener, KeyLis
 					
 					if(retour == 0 || retour == 1) {
 						JO_PARIS.gererVueConnexion(true);
-						VueConnexion.activerPanel(0);
+						VueConnexion.activerPanel(3);
 					}
 					
 				}

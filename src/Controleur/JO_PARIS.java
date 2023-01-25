@@ -1,5 +1,6 @@
 package Controleur;
 
+import Vue.VuePanel.VueGenerale;
 import Vue.Vue_Connexions.VueConnexion;
 import Vue.Vue_Connexions.VueInscriptionPart;
 import Vue.Vue_Connexions.VueInscriptionPro;
@@ -9,13 +10,13 @@ public class JO_PARIS {
 	private static VueConnexion uneVueConnexion;
 	private static VueInscriptionPart uneVueInscriptionPart;
 	private static VueInscriptionPro uneVueInscriptionPro;
-//	private static VueGenerale uneVueGenerale;
+	private static VueGenerale uneVueGenerale;
 	
 	public static void main(String[] args) {
 		uneVueConnexion = new VueConnexion();
 		uneVueInscriptionPart = new VueInscriptionPart();
 		uneVueInscriptionPro = new VueInscriptionPro();
-//		uneVueGenerale = new VueGenerale();
+		uneVueGenerale = new VueGenerale();
 	}
 	
 	public static void gererVueConnexion(boolean active) {
@@ -30,7 +31,7 @@ public class JO_PARIS {
 		uneVueInscriptionPro.setVisible(active);
 	}
 	
-//	public static void gererVueGenerale(boolean active) {
-//		uneVueGenerale.setVisible(active);
-//	}
+	public static void gererVueGenerale(boolean active) {
+		uneVueGenerale.setVisible(active);
+	}
 }
