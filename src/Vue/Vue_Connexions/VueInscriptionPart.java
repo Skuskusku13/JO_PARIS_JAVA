@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.UnsupportedEncodingException;
+import java.util.Iterator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -25,17 +27,15 @@ public class VueInscriptionPart extends JFrame implements ActionListener, KeyLis
 
 	private static final long serialVersionUID = 1L;
 	
-	private JTextField txtEmail = new JTextField("");
-	private JPasswordField txtMdp = new JPasswordField("");
-	private JTextField txtNom = new JTextField("");
-	private JTextField txtTel = new JTextField("");
-	private JTextField txtRole = new JTextField("clientPart");
-	private JTextField txtPrenom = new JTextField("");
+	private JPasswordField txtMdp = new JPasswordField();
+
+	private String[] boutonNames = {"btAnnuler", "btInscription", "btRetour", "btQuitter"};
 	
-	private JButton btAnnuler = new JButton("Annuler");
-	private JButton btInscription = new JButton("S'inscrire");
-	private JButton btRetour = new JButton("Retour Connexion");
-	private JButton btQuitter = new JButton("Quitter");
+	private String[] boutonText = {"Annuler", "S'inscrire", "Retour Connexion", "Quitter"};
+	
+	private String[] jtfNames = {"txtNom", "txtPrenom", "txtTel", "txtEmail", "txtRole"};
+	
+	private String[] jlText = {"Nom", "Prénom", "Téléphone", "Email", "Role"};
 	
 	private JPanel panelInscription = new JPanel();
 	private JPanel panelButtonAction = new JPanel();
@@ -55,112 +55,173 @@ public class VueInscriptionPart extends JFrame implements ActionListener, KeyLis
 		JLabel monLogo = new JLabel(logo);
 		monLogo.setBounds(230, 10, 240, 240);
 		this.add(monLogo);
+		
 	
-		// Construction du panel de connection
-		
-		
+		// Construction du panel d'inscription
 		this.panelInscription.setBounds(100, 300, 500, 300);
 		this.panelInscription.setBackground(new Color(255, 255, 204));
 		this.panelInscription.setLayout(new GridLayout(7, 2));
 		
-		this.panelInscription.add(new JLabel("Nom")).setFont(new Font("Paris2024", Font.ITALIC, 18));
-		this.panelInscription.add(this.txtNom);
 		
-		this.panelInscription.add(new JLabel("Prenom")).setFont(new Font("Paris2024", Font.ITALIC, 18));
-		this.panelInscription.add(this.txtPrenom);
-		
-		this.panelInscription.add(new JLabel("Email")).setFont(new Font("Paris2024", Font.ITALIC, 18));
-		this.panelInscription.add(this.txtEmail);
-		
-		this.panelInscription.add(new JLabel("Password")).setFont(new Font("Paris2024", Font.ITALIC, 18));
-		this.panelInscription.add(this.txtMdp);
-		
-		this.panelInscription.add(new JLabel("Telephone")).setFont(new Font("Paris2024", Font.ITALIC, 18));
-		this.panelInscription.add(this.txtTel);
-		
-		this.panelInscription.add(this.btAnnuler).setFont(new Font("Paris2024", Font.ITALIC, 18));
-		this.panelInscription.add(this.btInscription).setFont(new Font("Paris2024", Font.ITALIC, 18));
-		
-		this.add(panelInscription);
-		
-		// panel des boutons retour et quitter
-		
+		//construction du panel des boutons retour et quitter
 		this.panelButtonAction.setBounds(250, 600, 200, 80);
 		this.panelButtonAction.setBackground(new Color(255, 255, 204));
 		this.panelButtonAction.setLayout(new GridLayout(2, 1));
 		
-		this.panelButtonAction.add(this.btRetour).setFont(new Font("Paris2024", Font.ITALIC, 18));
-		this.panelButtonAction.add(this.btQuitter).setFont(new Font("Paris2024", Font.ITALIC, 18));
+		
+		// boucles qui ajoute les JTexfield ainsi que les JLabel en meme temps
+		for (int i = 0; i < jlText.length; i++) {
+			JLabel jl = new JLabel();
+			jl.setText(jlText[i]);
+			jl.setFont(new Font("Paris2024", Font.ITALIC, 18));
+			
+			JTextField jtf = new JTextField();
+			jtf.setName(jtfNames[i]);
+			jtf.setFont(new Font("Paris2024", Font.ITALIC, 18));
+			
+			if(jtf.getName() == "txtRole") {
+				 jtf.setText("ClientPart");
+			}
+			
+			// condition pour ne pas proposer a l'utilisateur de mettre son role
+			// on ajoute pas au formulaire le input role
+			if(jtf.getName() != "txtRole" && jl.getName() != "Role") {	
+				this.panelInscription.add(jl);
+				this.panelInscription.add(jtf);
+			}
+		}
+//		// ajout de la case Password qui n'est pas la liste du JTexfield et du JLabel
+		this.panelInscription.add(new JLabel("Password")).setFont(new Font("Paris2024", Font.ITALIC, 18));
+		this.panelInscription.add(txtMdp);
+
+		
+//		//boucles qui ajoutes les Jbutton et les rends ecouttables
+		for (int i = 0; i < boutonNames.length; i++) {
+			JButton jb = new JButton();
+			jb.setName(boutonNames[i]);
+			jb.setText(boutonText[i]);
+			jb.setFont(new Font("Paris2024", Font.ITALIC, 18));
+			jb.addActionListener(this);
+			jb.setActionCommand(boutonNames[i]);
+			
+			if(jb.getName() == "btAnnuler" || jb.getName() == "btInscription") {
+				this.panelInscription.add(jb);
+			} else {
+				this.panelButtonAction.add(jb);
+			}
+		}
+//
+//		// ajout des panels dans notre JFrame
+		this.add(panelInscription);
 		this.add(panelButtonAction);
-		
-		
-		// rendre les boutons ecoutables
-		this.btAnnuler.addActionListener(this);
-		this.btInscription.addActionListener(this);
-		
-		this.btRetour.addActionListener(this);
-		this.btQuitter.addActionListener(this);
-		
-		// définir la police de chaque bouton
-		this.txtNom.setFont(new Font("Paris2024", Font.ITALIC, 18));
-		this.txtEmail.setFont(new Font("Paris2024", Font.ITALIC, 18));
-		this.txtPrenom.setFont(new Font("Paris2024", Font.ITALIC, 18));
-		this.txtTel.setFont(new Font("Paris2024", Font.ITALIC, 18));
-		
 		
 		this.setVisible(false);
 	}
 	
 	public void traitement() {
-		String nom = this.txtNom.getText();
-		String email = this.txtEmail.getText();
-		String mdp = new String(this.txtMdp.getPassword());
-		String tel = this.txtTel.getText();
-		String role = this.txtRole.getText();;
-		String prenom = this.txtPrenom.getText();
 		
-		if(nom.equals("") || email.equals("") || mdp.equals("") || tel.equals("") || role.equals("") || prenom.equals("")) {
-			JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs", "Champs vide", JOptionPane.ERROR_MESSAGE);
-		} else {
-			ClientPart unClientPart = new ClientPart(nom, email, mdp, tel, role, prenom);
-			C_ClientPart.insertClientPart(unClientPart);
-			if(unClientPart != null) {
-				int retour = JOptionPane.showConfirmDialog(
-						this,
-						"Votre inscription a bien été prise effectué " 
-						+ unClientPart.getNom() + " "
-						+ unClientPart.getPrenom(), 
-						"Inscription Validée !", 
-						JOptionPane.YES_OPTION
+		String mdp = new String(this.txtMdp.getPassword());
+//		String nom = new String(nom);
+		
+		for (int i = 0; i < jlText.length; i++) {
+			String a = jtfNames[i];
+//			a.valueOf(jtfNames[i]);
+
+			if(a.equals("")) {
+				JOptionPane.showMessageDialog(
+						this, 
+						"Veuillez remplir tous les champs", 
+						"Champs vide", 
+						JOptionPane.ERROR_MESSAGE
 				);
-				
-				if(retour == 0 || retour == 1) {
-					JO_PARIS.gererVueConnexion(true);
-					VueConnexion.activerPanel(0);
+				break;
+			}  else {
+				ClientPart unClientPart = new ClientPart(jlText[0], jlText[3], mdp, jlText[2], jlText[4], jlText[1]);
+				C_ClientPart.insertClientPart(unClientPart);
+				if(unClientPart != null) {
+					int retour = JOptionPane.showConfirmDialog(
+							this,
+							"Votre inscription a bien été prise effectué " 
+							+ unClientPart.getNom() + " "
+							+ unClientPart.getPrenom(), 
+							"Inscription Validée !", 
+							JOptionPane.YES_OPTION
+					);
+					
+					if(retour == 0 || retour == 1) {
+						JO_PARIS.gererVueConnexion(true);
+						VueConnexion.activerPanel(0);
+					}
+					
 				}
-				
 			}
 		}
+		
+//		String email = this.txtEmail.getText();
+//		String mdp = new String(this.txtMdp.getPassword());
+//		String tel = this.txtTel.getText();
+//		String role = this.txtRole.getText();;
+//		String prenom = this.txtPrenom.getText();
+		
+//		if(nom.equals("") || email.equals("") || mdp.equals("") || tel.equals("") || role.equals("") || prenom.equals("")) {
+//			JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs", "Champs vide", JOptionPane.ERROR_MESSAGE);
+//		} else {
+//			ClientPart unClientPart = new ClientPart(nom, email, mdp, tel, role, prenom);
+//			C_ClientPart.insertClientPart(unClientPart);
+//			if(unClientPart != null) {
+//				int retour = JOptionPane.showConfirmDialog(
+//						this,
+//						"Votre inscription a bien été prise effectué " 
+//						+ unClientPart.getNom() + " "
+//						+ unClientPart.getPrenom(), 
+//						"Inscription Validée !", 
+//						JOptionPane.YES_OPTION
+//				);
+//				
+//				if(retour == 0 || retour == 1) {
+//					JO_PARIS.gererVueConnexion(true);
+//					VueConnexion.activerPanel(0);
+//				}
+//				
+//			}
+//		}
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == this.btInscription) {
+		
+		String command = e.getActionCommand();
+		
+		switch (command) {
+		case "btAnnuler":
+			break;
+		case "btInscription":
 			this.traitement();
-		} else if (e.getSource() == this.btAnnuler) {
-			this.txtNom.setText("");
-			this.txtEmail.setText("");
-			this.txtMdp.setText("");
-			this.txtTel.setText("");
-			this.txtPrenom.setText("");
-			
-		} else if(e.getSource() == this.btRetour) {
+			break;
+		case "btRetour":
 			JO_PARIS.gererVueConnexion(true);
 			VueConnexion.activerPanel(0);
-		} else if(e.getSource() == this.btQuitter) {
+			break;
+		case "btQuitter":
 			System.exit(0);
+			break;
 		}
-		
+//		if(e.getSource() == this.btInscription) {
+//			this.traitement();
+//		} else if (e.getSource() == this.btAnnuler) {
+//			this.txtNom.setText("");
+//			this.txtEmail.setText("");
+//			this.txtMdp.setText("");
+//			this.txtTel.setText("");
+//			this.txtPrenom.setText("");
+//			
+//		} else if(e.getSource() == this.btRetour) {
+//			JO_PARIS.gererVueConnexion(true);
+//			VueConnexion.activerPanel(0);
+//		} else if(e.getSource() == this.btQuitter) {
+//			System.exit(0);
+//		}
+//		
 	}
 	
 	@Override

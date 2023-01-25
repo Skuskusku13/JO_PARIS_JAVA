@@ -109,10 +109,8 @@ public class VueConnexion extends JFrame implements ActionListener, KeyListener{
 			if (jb.getName() == boutonsNames[0] || jb.getName() == boutonsNames[1]) {
 				this.panelInscriptions.add(jb);
 			} else if(jb.getName() == boutonsNames[4]) {
-				jb.addActionListener(this);
 				this.panelQuitter.add(jb);
 			} else {
-				jb.addActionListener(this);
 				this.panelConnexion.add(jb);
 			}	
 		}
@@ -129,16 +127,12 @@ public class VueConnexion extends JFrame implements ActionListener, KeyListener{
 		this.setVisible(true);
 	}
 	
-
 	public void traitement() {
 		String email = this.txtEmail.getText();
 		String mdp = new String (this.txtMdp.getPassword());
 		
 		if(email.equals("") || mdp.equals("")) {
-			JOptionPane.showMessageDialog(this, 
-			"Veuillez remplir tous les champs !",
-			"Champs vide", 
-			JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs !", "Champs vide", JOptionPane.YES_OPTION);
 		} else {
 			// verification dans la bdd
 			User unUser = C_User.selectWhereUser(email, mdp);
@@ -179,6 +173,7 @@ public class VueConnexion extends JFrame implements ActionListener, KeyListener{
 		case "btSeConnecter":
 			this.traitement();
 			break;
+			
 		case "btAnnuler":
 			this.txtEmail.setText("");
 			this.txtMdp.setText("");
@@ -202,15 +197,20 @@ public class VueConnexion extends JFrame implements ActionListener, KeyListener{
 		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
 			this.traitement();
 		}
+		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 
