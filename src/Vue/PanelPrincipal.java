@@ -1,19 +1,19 @@
-package Vue.VuePanel;
+package Vue;
 
 import java.awt.Color;
 
 import javax.swing.JPanel;
 
-public abstract class PanelPrincipal extends JPanel{
-
+public class PanelPrincipal extends JPanel {
+	
 	private static final long serialVersionUID = 1L;
 
 	public PanelPrincipal(Color uneCouleur) {
-		this.setBounds(100, 100, 1000, 800);
+		this.setBounds(100, 150, 800, 500);
 		this.setBackground(uneCouleur);
 		this.setLayout(null);
 		
-		this.setVisible(false);
+		this.setVisible(false);	
 	}
 
 }

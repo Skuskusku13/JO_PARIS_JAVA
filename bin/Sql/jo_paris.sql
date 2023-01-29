@@ -54,7 +54,7 @@ CREATE TABLE Client_Particulier
 CREATE TABLE Categorie
 (
     idcategorie Int (3) NOT NULL auto_increment,
-    libelle     Text NOT NULL ,
+    libelle     text NOT NULL ,
     PRIMARY KEY (idcategorie)
 );
 
