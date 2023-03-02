@@ -5,27 +5,38 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import Controleur.C_Categorie;
 import Controleur.Categorie;
+import Controleur.Tableau;
 
 public class PanelCategorie extends PanelPrincipal implements ActionListener {
 	
 	private static final long serialVersionUID = 1L;
 	
 	private JPanel panelCategorie = new JPanel();
+	private JPanel panelTable = new JPanel();
+	private JTable tableCategorie = new JTable();
+	
 	private JTextField txtLibelle = new JTextField();
 	
 	private JButton[] buttons = new JButton[2];
 	private String[] buttonNames = {"btAnnuler", "btValider"};
 	private String[] buttonText = {"Annuler", "Valider l'évènement"};
+	
+	private String[] entetes = {"LIBELLE"};
+	
+	private Tableau unTableau;
 	
 	public PanelCategorie() {
 		super(new Color(255, 255, 255));
@@ -53,6 +64,30 @@ public class PanelCategorie extends PanelPrincipal implements ActionListener {
 
 		this.add(panelCategorie);
 		
+		this.panelTable.setBounds(500, 50, 600, 500);
+		this.panelTable.setBackground(new Color(255, 255, 255));
+		this.panelTable.setLayout(null);
+		
+		this.unTableau = new Tableau(this.obtenirCategories(), entetes);
+		this.tableCategorie = new JTable(this.unTableau);
+		
+		JScrollPane unScroll = new JScrollPane(this.tableCategorie);
+		unScroll.setBounds(0, 0, 600, 350);
+		this.panelTable.add(unScroll);
+		this.add(panelTable);
+		
+	}
+	
+	public Object [][] obtenirCategories() {
+		ArrayList<Categorie> lesCategories = C_Categorie.selectAllCategories();
+		Object [][] matrice = new Object [lesCategories.size()][1];
+		int i = 0;
+		for(Categorie uneCategorie : lesCategories) {
+			matrice [i][0] = uneCategorie.getLibelle();
+			i++;
+		}
+		
+		return matrice;
 	}
 	
 	public void traitement() {
@@ -74,6 +109,9 @@ public class PanelCategorie extends PanelPrincipal implements ActionListener {
 						"Insertion validée", 
 						JOptionPane.DEFAULT_OPTION
 				);
+				Object [] ligne = {libelle};
+				this.unTableau.insererLigne(ligne);
+				
 				this.txtLibelle.setText("");
 			}
 		}

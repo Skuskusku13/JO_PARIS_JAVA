@@ -1,6 +1,7 @@
 package Vue;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,10 +17,11 @@ public class VueGenerale extends JFrame implements ActionListener {
 
 	private JPanel panelMenu = new JPanel();
 	
-	private JButton[] buttons = new JButton[5];
-	private String[] buttonNames = {"btClientPart", "btClientPro", "btCategorie", "btEvenement", "btQuitter"};
-	private String[] buttonText = {"Clients Particulier", "Clients Pro", "Catégories", "Évènement", "Quitter"};
+	private JButton[] buttons = new JButton[6];
+	private String[] buttonNames = {"btAdmin", "btClientPart", "btClientPro", "btCategorie", "btEvenement", "btQuitter"};
+	private String[] buttonText = {"Administrateurs", "Clients Particulier", "Clients Pro", "Catégories", "Évènement", "Quitter"};
 	
+	private static PanelAdmin unPanelAdmin = new PanelAdmin();
 	private static PanelClientPart unPanelClientPart = new PanelClientPart();
 	private static PanelClientPro unPanelClientPro = new PanelClientPro();
 	private static PanelCategorie unPanelCategorie = new PanelCategorie();
@@ -28,27 +30,30 @@ public class VueGenerale extends JFrame implements ActionListener {
 	public VueGenerale() {
 
 		this.setTitle("Gestion des JO 2024");
-		this.setBounds(100, 20, 1000, 750);
+		this.setBounds(50, 20, 1350, 750);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setBackground(new Color(255, 255, 204));
+		this.getContentPane().setBackground(new Color(255, 255, 204));
 		this.setLayout(null);
+		
+		// construction du panel menu
+		this.panelMenu.setBounds(100, 40, 1000, 60);
+		this.panelMenu.setLayout(new GridLayout(1, 6));
+		this.panelMenu.setBackground(new Color(255, 255, 204));
 		
 		for (int i = 0; i < buttons.length; i++) {
 		    buttons[i] = new JButton();
 		    buttons[i].setName(buttonNames[i]);
 		    buttons[i].setText(buttonText[i]);
+		    buttons[i].setFont(new Font("Paris2024", Font.ITALIC, 18));
 		    buttons[i].addActionListener(this);
 		    buttons[i].setActionCommand(buttonNames[i]);
 		    
 		    this.panelMenu.add(buttons[i]);
 		}
 		
-		// construction du panel menu
-		this.panelMenu.setBounds(100, 40, 800, 60);
-		this.panelMenu.setLayout(new GridLayout(1, 5));
-		
 		this.add(panelMenu);
 		 
+		this.add(unPanelAdmin);
 		this.add(unPanelClientPart);
 		this.add(unPanelClientPro);
 		this.add(unPanelCategorie);
@@ -59,6 +64,7 @@ public class VueGenerale extends JFrame implements ActionListener {
 	}
 	
 	public void activerPanelPrincipal(int choix) {
+		unPanelAdmin.setVisible(false);
 		unPanelClientPart.setVisible(false);
 		unPanelClientPro.setVisible(false);
 		unPanelCategorie.setVisible(false);
@@ -69,6 +75,7 @@ public class VueGenerale extends JFrame implements ActionListener {
 		case 2: unPanelClientPro.setVisible(true); break;
 		case 3: unPanelCategorie.setVisible(true); break;
 		case 4: unPanelEvenement.setVisible(true); break;
+		case 5: unPanelAdmin.setVisible(true); break;
 		}
 		
 	}
@@ -90,7 +97,9 @@ public class VueGenerale extends JFrame implements ActionListener {
 		case "btEvenement":
 			this.activerPanelPrincipal(4);
 			break;
-			
+		case "btAdmin":
+			this.activerPanelPrincipal(5);
+			break;
 			
 			
 		case "btQuitter":

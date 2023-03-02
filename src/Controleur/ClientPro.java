@@ -12,6 +12,7 @@ public class ClientPro extends User {
 		this.num_siret = num_siret;
 		this.adresse = adresse;
 	}
+	
 	public ClientPro(String nom, String email, String mdp, String tel, String role, String num_siret, String adresse) {
 		super(nom, email, mdp, tel, role);
 		this.num_siret = num_siret;

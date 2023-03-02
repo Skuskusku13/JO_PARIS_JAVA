@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,12 +21,12 @@ import Controleur.C_User;
 import Controleur.JO_PARIS;
 import Controleur.User;
 
-public class VueConnexion extends JFrame implements ActionListener {
+public class VueConnexion extends JFrame implements ActionListener, KeyListener {
 
 	private static final long serialVersionUID = 1L;
 
-	private JTextField txtEmail = new JTextField();
-	private JPasswordField txtMdp = new JPasswordField();
+	private JTextField txtEmail = new JTextField("a@gmail.com");
+	private JPasswordField txtMdp = new JPasswordField("123");
 
 	private JButton btAnnuler = new JButton("Annuler");
 	private JButton btConnexion = new JButton("Connexion");
@@ -78,6 +80,10 @@ public class VueConnexion extends JFrame implements ActionListener {
 		this.btQuitter.addActionListener(this);
 		this.btConnexion.addActionListener(this);
 
+		// boutons écoutable avec les touches
+		this.txtEmail.addKeyListener(this);
+		this.txtMdp.addKeyListener(this);
+
 		this.setVisible(true);
 	}
 
@@ -101,8 +107,20 @@ public class VueConnexion extends JFrame implements ActionListener {
 			} else {
 				JOptionPane.showMessageDialog(this, "Bienvenue MME/M" + unUser.getNom());
 				this.viderChamps();
+				this.dispose();
 				this.activerPanel(1);
 			}
+		}
+	}
+
+	public void quitter() {
+		int retour = JOptionPane.showConfirmDialog(this,
+			"Etes-vous sur de vouloir quitter ?",
+			"Quitter", 
+			JOptionPane.YES_NO_OPTION
+		);
+		if(retour != 1) {				
+			System.exit(0);
 		}
 	}
 
@@ -123,10 +141,27 @@ public class VueConnexion extends JFrame implements ActionListener {
 			this.viderChamps();
 		} else if (e.getSource() == btConnexion) {
 			this.traitement();
-			this.dispose();
 		} else if (e.getSource() == this.btQuitter) {
-			System.exit(0);
+			quitter();
 		}
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_ENTER ) {
+			this.traitement();
+		} else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+			quitter();
+		}
+	}
+
+	@Override
+		public void keyTyped(KeyEvent e) {
+	}
+	
+	@Override
+	public void keyReleased(KeyEvent e) {
+		
 	}
 
 }

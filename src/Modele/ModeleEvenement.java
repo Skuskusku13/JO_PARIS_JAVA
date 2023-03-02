@@ -1,14 +1,15 @@
 package Modele;
 
-import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import Controleur.Evenement;
 
 public class ModeleEvenement {
 	
-	private static Bdd uneBdd = new Bdd("localhost:8880", "jo_paris", "root", "root");
+	private static Bdd uneBdd = new Bdd("localhost:8889", "jo_paris", "root", "root");
 
 	public static void insertEvenement(Evenement unEvenement) {
 		String req = "INSERT INTO evenement VALUES(NULL, '"
@@ -33,26 +34,37 @@ public class ModeleEvenement {
 	}
 
 	
-	public static void insertEvenement2(Evenement unEvenement) {
-		String req = "INSERT INTO evenement (type, dateEvent, nomEvenement, description, adresse, horraireD, horraireF, capacite, idcategorie)"
-				+ " VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ? ,?);";
+	public static ArrayList<Evenement> selectAllEvenements() {
+		String req = "SELECT * FROM evenement;";
+		ArrayList<Evenement> lesEvenements = new ArrayList<Evenement>();
+		
 		try {
 			uneBdd.seConnecter();
-			PreparedStatement statement = uneBdd.getMaConnexion().prepareStatement(req);
-			statement.setString(1, unEvenement.getType());
-			statement.setString(2, unEvenement.getDateEvent());
-			statement.setString(3, unEvenement.getNomEvenement());
-			statement.setString(4, unEvenement.getDescription());
-			statement.setString(5, unEvenement.getAdresse());
-			statement.setString(6, unEvenement.getHorraireD());
-			statement.setString(7, unEvenement.getHorraireF());
-			statement.setInt(8, unEvenement.getCapacite());
-			statement.setLong(9, unEvenement.getIdcategorie());
-			statement.executeQuery();
-			statement.close();
+			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			ResultSet desResultats = unStat.executeQuery(req);
+			
+			while(desResultats.next()) {
+				Evenement unEvent = new Evenement(
+						desResultats.getInt("idevenement"),
+						desResultats.getString("type"),
+						desResultats.getString("dateEvent"),
+						desResultats.getString("nomEvenement"),
+						desResultats.getString("description"),
+						desResultats.getString("adresse"),
+						desResultats.getString("horraireD"),
+						desResultats.getString("horraireF"),
+						desResultats.getInt("capacite"),
+						desResultats.getInt("idcategorie")
+						);
+				lesEvenements.add(unEvent);
+			}
+			
+			unStat.close();
 			uneBdd.seDeconnecter();
-		}catch (SQLException e) {
-			e.getMessage();
+		} catch (SQLException e) {
+			System.out.println("Erreur d'execution de la requete : " + req);
+			System.out.println(e.getMessage());
 		}
+		return lesEvenements;
 	}
 }

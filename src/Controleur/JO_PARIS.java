@@ -7,6 +7,7 @@ public class JO_PARIS {
 	
 	private static VueConnexion uneVueConnexion;
 	private static VueGenerale uneVueGenerale;
+	
 	public static void main(String[] args) {
 		uneVueConnexion = new VueConnexion();
 		uneVueGenerale = new VueGenerale();

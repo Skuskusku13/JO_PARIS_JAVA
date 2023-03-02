@@ -1,5 +1,7 @@
 package Controleur;
 
+import java.util.ArrayList;
+
 import Modele.ModeleEvenement;
 
 public class C_Evenement {
@@ -8,5 +10,9 @@ public class C_Evenement {
 		
 		ModeleEvenement.insertEvenement(unEvenement);
 		
+	}
+	
+	public static ArrayList<Evenement> selectAllEvenements() {
+		return ModeleEvenement.selectAllEvenements();
 	}
 }

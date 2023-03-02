@@ -47,8 +47,8 @@ public class Evenement {
 		this.nomEvenement = "";
 		this.description = "";
 		this.adresse = "";
-		this.horraireD = "";
-		this.horraireF = "";
+//		this.horraireD = "";
+//		this.horraireF = "";
 		this.capacite = 0;
 		this.idcategorie = uneCategorie.getIdcategorie();
 	}
