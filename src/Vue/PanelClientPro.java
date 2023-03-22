@@ -5,7 +5,10 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -90,6 +93,46 @@ public class PanelClientPro extends PanelPrincipal implements ActionListener{
 		unScroll.setBounds(0, 0, 600, 350);
 		this.panelTable.add(unScroll);
 		this.add(panelTable);
+		
+		this.tablePro.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int numLigne;
+				if(e.getClickCount() == 1) {
+					numLigne = tablePro.getSelectedRow();
+					for (int j = 0; j < textfields.length; j++) {
+						textfields[j].setText((String) unTableau.getValueAt(numLigne, j));
+					}
+					buttons[1].setText("Modifier");
+				}
+				
+			}
+		});
 	}
 	
 	public Object[][] obtenirClientsPro() {

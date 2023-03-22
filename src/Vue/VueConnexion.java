@@ -34,9 +34,18 @@ public class VueConnexion extends JFrame implements ActionListener, KeyListener 
 
 	private JPanel panelConnexion = new JPanel();
 	private JPanel panelQuitter = new JPanel();
+
+	private static VueConnexion instance;
+
+	public static VueConnexion getInstance(){
+		if(instance == null){
+			instance = new VueConnexion();
+		}
+		return instance;
+	}
 	
 
-	public VueConnexion() {
+	private VueConnexion() {
 
 		this.setTitle("Programme java JO PARIS 2024");
 		this.setResizable(false);

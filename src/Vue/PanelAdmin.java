@@ -18,11 +18,11 @@ import javax.swing.JTextField;
 
 import Controleur.Admin;
 import Controleur.C_Admin;
-import Controleur.C_User;
 import Controleur.Tableau;
 
 public class PanelAdmin extends PanelPrincipal implements ActionListener {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel panelInscriptionAdmin = new JPanel();
 	private JPanel panelTable = new JPanel();
 	private JTable tabelAdmin = new JTable();
@@ -147,7 +147,6 @@ public class PanelAdmin extends PanelPrincipal implements ActionListener {
 				JOptionPane.showMessageDialog(this,
 						"Insertion de MME/M " +unAdmin.getNom()+ "réussi(e)"
 						);
-				int iduser = C_User.selectWhereUser(email, mdp).getIduser();
 				Object ligne [] = {nom, email, tel};
 				this.unTableau.insererLigne(ligne);
 				

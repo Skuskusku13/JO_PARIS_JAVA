@@ -21,7 +21,7 @@ public class Bdd {
 	public void chargerPilote() {
 		// JDBC : Java DataBase Connector
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
 		} catch(ClassNotFoundException exp) {
 			System.out.println("Erreur de chargement du pilote JDBC");
 		}

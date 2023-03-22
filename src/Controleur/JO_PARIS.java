@@ -5,19 +5,16 @@ import Vue.VueGenerale;
 
 public class JO_PARIS {
 	
-	private static VueConnexion uneVueConnexion;
-	private static VueGenerale uneVueGenerale;
-	
 	public static void main(String[] args) {
-		uneVueConnexion = new VueConnexion();
-		uneVueGenerale = new VueGenerale();
+		VueConnexion.getInstance();
+		VueGenerale.getInstance();
 	}
 	
 	public static void gererVueConnexion(boolean active) {
-		uneVueConnexion.setVisible(active);
+		VueConnexion.getInstance().setVisible(active);
 	}
 	
 	public static void gererVueGenerale(boolean active) {
-		uneVueGenerale.setVisible(active);
+		VueGenerale.getInstance().setVisible(active);
 	}
 }
