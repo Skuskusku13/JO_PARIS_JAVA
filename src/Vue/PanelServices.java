@@ -81,7 +81,7 @@ public class PanelServices extends PanelPrincipal implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String command = e.getActionCommand();
+//		String command = e.getActionCommand();
 //		switch (command) {
 //		case "btAnnuler":
 //			this.viderChamps();
