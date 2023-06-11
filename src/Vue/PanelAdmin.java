@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -25,7 +27,7 @@ public class PanelAdmin extends PanelPrincipal implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JPanel panelInscriptionAdmin = new JPanel();
 	private JPanel panelTable = new JPanel();
-	private JTable tabelAdmin = new JTable();
+	private JTable tableAdmin = new JTable();
 	private Tableau unTableau;
 	
 	private JTextField[] textfields = new JTextField[3];
@@ -40,7 +42,16 @@ public class PanelAdmin extends PanelPrincipal implements ActionListener {
 	private String[] btText = {"Annuler", "Inscription"};
 	
 	
-	public PanelAdmin() {
+	private static PanelAdmin instance;
+	
+	public static PanelAdmin getInstance() {
+		if(instance == null) {
+			instance = new PanelAdmin();
+		}
+		return instance;
+	}
+	
+	private PanelAdmin() {
 		super(new Color(255, 255, 255));
 		
 		this.panelInscriptionAdmin.setBounds(30, 50, 350, 400);
@@ -81,12 +92,60 @@ public class PanelAdmin extends PanelPrincipal implements ActionListener {
 		this.panelTable.setLayout(null);
 		
 		this.unTableau = new Tableau(this.obtenirAdmin(), entetes);
-		this.tabelAdmin = new JTable(unTableau);
+		this.tableAdmin = new JTable(unTableau);
 		 
 		
-		JScrollPane unScroll = new JScrollPane(this.tabelAdmin);
+		JScrollPane unScroll = new JScrollPane(this.tableAdmin);
 		unScroll.setBounds(0, 0, 600, 350);
 		this.panelTable.add(unScroll);
+		
+		this.tableAdmin.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int numLigne;
+				if(e.getClickCount() == 2) {
+					numLigne = tableAdmin.getSelectedRow();
+					int retour = JOptionPane.showConfirmDialog(null,
+							"Voulez-vous supprimer cet Admin ? ", 
+							"suppresion Admin",
+							JOptionPane.YES_NO_OPTION
+							);
+					if(retour == 0) {
+						//suppression du client de la base 
+						String nom = (String) unTableau.getValueAt(numLigne, 0);
+						String email = (String) unTableau.getValueAt(numLigne, 1);
+						C_Admin.deleteAdmin(nom, email);
+						
+						//suppression de la ligne dans le tableau
+						unTableau.supprimerLigne(numLigne);
+					}
+				}
+			}
+		});
+		
 		this.add(panelTable);
 		
 	}
@@ -128,6 +187,20 @@ public class PanelAdmin extends PanelPrincipal implements ActionListener {
 		
 		String list[] = {nom, email, mdp, tel, role};
 		boolean champsVide = false;
+		boolean verifMdp = false;
+
+		for (int i = 0; i < mdp.length(); i++) {
+			verifMdp = i < 8 ? false : true;
+		}
+		
+		if(verifMdp != true) {
+			JOptionPane.showMessageDialog(this,
+					"Merci de rentrer un Mot de passe contenant au moins 8 caractères",
+					"Mot de passe trop court",
+					JOptionPane.CLOSED_OPTION);
+			return;
+		}
+		
 		
 		for (int i = 0; i < list.length; i++) {
 			if(list[i].equals("")) {

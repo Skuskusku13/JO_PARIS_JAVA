@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -41,6 +43,16 @@ public class PanelClientPart extends PanelPrincipal implements ActionListener{
 	
 	
 	private static final long serialVersionUID = 1L;
+	
+	private static PanelClientPart instance;
+	
+	public static PanelClientPart getInstance() {
+		if(instance == null) {
+			instance = new PanelClientPart();
+		}
+		return instance;
+	}
+	
 
 	public PanelClientPart() {
 		super(new Color(255, 255, 255));
@@ -91,6 +103,63 @@ public class PanelClientPart extends PanelPrincipal implements ActionListener{
 		JScrollPane unScroll = new JScrollPane(this.tablePart);
 		unScroll.setBounds(0, 0, 600, 350);
 		this.panelTable.add(unScroll);
+		
+		this.tablePart.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int numLigne;
+				if(e.getClickCount() == 2) {
+					numLigne = tablePart.getSelectedRow();
+					int retour = JOptionPane.showConfirmDialog(null,
+							"Voulez-vous supprimer ce Client Particulier ", 
+							"suppresion Client Particulier",
+							JOptionPane.YES_NO_OPTION
+							);
+					if(retour == 0) {
+						//suppression du client de la base 
+						String nom = (String) unTableau.getValueAt(numLigne, 0);
+						String prenom = (String) unTableau.getValueAt(numLigne, 1);
+						String email = (String) unTableau.getValueAt(numLigne, 2);
+						String tel = (String) unTableau.getValueAt(numLigne, 3);
+						
+						int idclient = C_ClientPart.selectIdPart(nom, prenom, email, tel);
+						
+						System.out.println(idclient);
+						
+						C_ClientPart.deleteClientPar(idclient);
+						
+						//suppression de la ligne dans le tableau
+						unTableau.supprimerLigne(numLigne);
+					}
+				}
+			}
+		});
+		
 		this.add(panelTable);
 	}
 	
@@ -135,6 +204,19 @@ public class PanelClientPart extends PanelPrincipal implements ActionListener{
 		String[] list = {nom, email, mdp, tel, role, prenom};
 		
 		boolean champsVide = false;
+		boolean verifMdp = false;
+
+		for (int i = 0; i < mdp.length(); i++) {
+			verifMdp = i < 8 ? false : true;
+		}
+		
+		if(verifMdp != true) {
+			JOptionPane.showMessageDialog(this,
+					"Merci de rentrer un Mot de passe contenant au moins 8 caractères",
+					"Mot de passe trop court",
+					JOptionPane.CLOSED_OPTION);
+			return;
+		}
 		
 		for (int i = 0; i < list.length; i++) {
 			if(list[i].equals("")) {

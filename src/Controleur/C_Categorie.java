@@ -14,5 +14,9 @@ public class C_Categorie {
 	public static ArrayList<Categorie> selectAllCategories() {
 		return ModeleCategorie.selectAllCategories();
 	}
+
+	public static void deleteCategorie(String libelle) {
+		ModeleCategorie.deleteCategorie(libelle);
+	}
 	
 }

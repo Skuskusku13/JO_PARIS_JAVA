@@ -13,7 +13,7 @@ public class ModeleAdmin {
 	private static Bdd uneBdd = new Bdd("localhost:8889", "jo_paris", "root", "root");
 	
 	public static void insertAdmin(Admin unAdmin) {
-		String req = "INSERT INTO user VALUES(NULL, '"
+		String req = "INSERT INTO User VALUES(NULL, '"
 				+unAdmin.getNom()+"', '"
 				+unAdmin.getEmail()+"', '"
 				+unAdmin.getMdp()+"', '"
@@ -31,9 +31,24 @@ public class ModeleAdmin {
 		}
 	}
 	
+	public static void deleteAdmin(String nom, String email) {
+		String req = "DELETE FROM User WHERE nom='"+nom+"' AND email='"+email+"';";
+		
+		try {
+			uneBdd.seConnecter();
+			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			unStat.execute(req);
+			unStat.close();
+			uneBdd.seDeconnecter();
+		} catch (SQLException e) {
+			System.out.println("Erreur d'execution de la requete : " + req);
+		}
+		
+	}
+	
 	public static ArrayList<Admin> selectAllAdmin() {
 		
-		String req = "SELECT * FROM USER where role='admin'";
+		String req = "SELECT * FROM User where role='admin'";
 		ArrayList<Admin> lesAdmins = new ArrayList<Admin>();
 		
 		try {

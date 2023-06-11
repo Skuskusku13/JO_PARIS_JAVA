@@ -12,7 +12,7 @@ public class ModeleEvenement {
 	private static Bdd uneBdd = new Bdd("localhost:8889", "jo_paris", "root", "root");
 
 	public static void insertEvenement(Evenement unEvenement) {
-		String req = "INSERT INTO evenement VALUES(NULL, '"
+		String req = "INSERT INTO Evenement VALUES(NULL, '"
 				+ unEvenement.getType() + "', '"
 				+ unEvenement.getDateEvent() + "', '"
 				+ unEvenement.getNomEvenement()+ "', '"
@@ -33,9 +33,22 @@ public class ModeleEvenement {
 		}
 	}
 
+	public static void deleteEvent(String type, String nomEvent, String horraireD, String horraireF) {
+		String req = "DELETE FROM Evenement WHERE type='"+type+"' AND nomEvenement='"+nomEvent+"' AND horraireD='"+horraireD+"' AND horraireF='"+horraireF+"';";
+		
+		try {
+			uneBdd.seConnecter();
+			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			unStat.execute(req);
+			unStat.close();
+			uneBdd.seDeconnecter();
+		} catch (SQLException e) {
+			System.out.println("Erreur d'execution de : " + req);
+		}
+	}
 	
 	public static ArrayList<Evenement> selectAllEvenements() {
-		String req = "SELECT * FROM evenement;";
+		String req = "SELECT * FROM Evenement;";
 		ArrayList<Evenement> lesEvenements = new ArrayList<Evenement>();
 		
 		try {

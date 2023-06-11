@@ -33,8 +33,48 @@ private static Bdd uneBdd = new Bdd("localhost:8889", "jo_paris", "root", "root"
 		}
 	}
 	
+	
+	public static int selectIdPro(String nom, String email, String tel, String siret) {
+		String req = "SELECT iduser FROM vueClientPro WHERE "
+				+ "nom='"+nom+"' AND "
+						+ "email='"+email+"' AND "
+								+ "tel='"+tel+"' AND "
+										+ "num_siret='"+siret+"';";
+		int id = 0;
+		
+		try {
+			uneBdd.seConnecter();
+			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			ResultSet unResulat = unStat.executeQuery(req);
+			
+			if(unResulat.next()) {				
+				id = unResulat.getInt("iduser");
+			}
+			
+			unStat.close();
+			uneBdd.seDeconnecter();
+		} catch(SQLException exp) {
+			System.out.println("Erreur d'execution de : " + req);
+		}	
+		return id;
+	}
+	
+	public static void deleteClientPro(int iduser) {
+		String req = "CALL deleteClientPro('" + iduser + "');";
+		
+		try {
+			uneBdd.seConnecter();
+			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			unStat.execute(req);
+			unStat.close();
+			uneBdd.seDeconnecter();
+		} catch(SQLException exp) {
+			System.out.println("Erreur d'execution de : " + req);
+		}
+	}
+	
 	public static ArrayList<ClientPro> selectAllClientPro() {
-		String req = "SELECT * FROM vueclientpro;";
+		String req = "SELECT * FROM vueClientPro;";
 		ArrayList<ClientPro> lesClientsPro = new ArrayList<ClientPro>();
 		
 		try {

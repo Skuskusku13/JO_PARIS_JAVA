@@ -13,7 +13,7 @@ public class ModeleCategorie {
 	// fonction de connexion à la bdd
 
 	public static void insertCategorie(Categorie uneCategorie) {
-		String req = "INSERT INTO categorie VALUES(NULL, '" + uneCategorie.getLibelle() + "');";
+		String req = "INSERT INTO Categorie VALUES(NULL, '" + uneCategorie.getLibelle() + "');";
 
 		try {
 			uneBdd.seConnecter();
@@ -26,9 +26,24 @@ public class ModeleCategorie {
 		}
 	}
 
+
+	public static void deleteCategorie(String libelle) {
+		String req = "DELETE FROM Categorie WHERE libelle='"+libelle+"';";
+
+		try {
+			uneBdd.seConnecter();
+			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			unStat.execute(req);
+			unStat.close();
+			uneBdd.seDeconnecter();
+		} catch (SQLException exp) {
+			System.out.println("Erreur d'execution de : " + req);
+		}
+	}
+	
 	public static ArrayList<Categorie> selectAllCategories() {
 
-		String req = "SELECT * FROM categorie;";
+		String req = "SELECT * FROM Categorie;";
 		ArrayList<Categorie> lesCategories = new ArrayList<Categorie>();
 
 		try {
@@ -50,4 +65,5 @@ public class ModeleCategorie {
 		return lesCategories;
 
 	}
+
 }

@@ -1,20 +1,21 @@
 package Controleur;
 
-public class TypeService {
+public class TypesServices {
+	
 	private int idTypeService;
 	private String libelle;
 	
 	
-	public TypeService(int idTypeService, String libelle) {
+	public TypesServices(int idTypeService, String libelle) {
 		this.idTypeService = idTypeService;
 		this.libelle = libelle;
 	}
 	
-	public TypeService(String libelle) {
+	public TypesServices(String libelle) {
 		this.libelle = libelle;
 	}
 	
-	public TypeService() {
+	public TypesServices() {
 		this.idTypeService = 0;
 		this.libelle = "";
 	}

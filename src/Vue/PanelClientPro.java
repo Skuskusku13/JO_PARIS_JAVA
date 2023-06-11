@@ -44,7 +44,17 @@ public class PanelClientPro extends PanelPrincipal implements ActionListener{
 	
 	private static final long serialVersionUID = 1L;
 
-	public PanelClientPro() {
+	private static PanelClientPro instance;
+	
+	public static PanelClientPro getInstance() {
+		if(instance == null) {
+			instance = new PanelClientPro();
+		}
+		return instance;
+	}
+	
+	
+	private PanelClientPro() {
 		super(new Color(255, 255, 255));
 		
 		this.panelInscriptionPro.setBounds(30, 50, 350, 400);
@@ -97,39 +107,53 @@ public class PanelClientPro extends PanelPrincipal implements ActionListener{
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
+				
 				
 			}
 			
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
+				
 				
 			}
 			
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
+				
 				
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
+				
 				
 			}
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int numLigne;
-				if(e.getClickCount() == 1) {
+				if(e.getClickCount() == 2) {
 					numLigne = tablePro.getSelectedRow();
-					for (int j = 0; j < textfields.length; j++) {
-						textfields[j].setText((String) unTableau.getValueAt(numLigne, j));
+					int retour = JOptionPane.showConfirmDialog(null,
+							"Voulez-vous supprimer ce Client Pro ", 
+							"suppresion Client Pro",
+							JOptionPane.YES_NO_OPTION
+							);
+					if(retour == 0) {
+						//suppression du client de la base 
+						String nom = (String) unTableau.getValueAt(numLigne, 0);
+						String email = (String) unTableau.getValueAt(numLigne, 1);
+						String tel = (String) unTableau.getValueAt(numLigne, 2);
+						String siret = (String) unTableau.getValueAt(numLigne, 4);
+						
+						int iduser = C_ClientPro.selectIdPro(nom, email, tel, siret);
+						
+						C_ClientPro.deleteClientPro(iduser);
+						
+						//suppression de la ligne dans le tableau
+						unTableau.supprimerLigne(numLigne);
 					}
-					buttons[1].setText("Modifier");
 				}
-				
 			}
 		});
 	}
@@ -175,7 +199,20 @@ public class PanelClientPro extends PanelPrincipal implements ActionListener{
 		String[] list = {nom, siret, email, adresse, tel, role, mdp};
 		
 		boolean champsVide = false;
+		boolean verifMdp = false;
+
+		for (int i = 0; i < mdp.length(); i++) {
+			verifMdp = i < 8 ? false : true;
+		}
 		
+		if(verifMdp != true) {
+			JOptionPane.showMessageDialog(this,
+					"Merci de rentrer un Mot de passe contenant au moins 8 caractères",
+					"Mot de passe trop court",
+					JOptionPane.CLOSED_OPTION);
+			return;
+		}
+				
 		for (int i = 0; i < list.length; i++) {
 			if(list[i].equals("")) {
 				champsVide = true;

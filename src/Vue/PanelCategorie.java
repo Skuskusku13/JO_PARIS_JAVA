@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -38,7 +40,17 @@ public class PanelCategorie extends PanelPrincipal implements ActionListener {
 	
 	private Tableau unTableau;
 	
-	public PanelCategorie() {
+	
+	private static PanelCategorie instance;
+	
+	public static PanelCategorie getInstance() {
+		if(instance == null) {
+			instance = new PanelCategorie();
+		}
+		return instance;
+	}
+	
+	private PanelCategorie() {
 		super(new Color(255, 255, 255));
 		
 		this.panelCategorie.setBounds(30, 50, 350, 100);
@@ -74,8 +86,56 @@ public class PanelCategorie extends PanelPrincipal implements ActionListener {
 		JScrollPane unScroll = new JScrollPane(this.tableCategorie);
 		unScroll.setBounds(0, 0, 600, 350);
 		this.panelTable.add(unScroll);
-		this.add(panelTable);
 		
+		this.tableCategorie.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int numLigne;
+				if(e.getClickCount() == 2) {
+					numLigne = tableCategorie.getSelectedRow();
+					int retour = JOptionPane.showConfirmDialog(null,
+							"Voulez-vous supprimer ce Service ", 
+							"suppresion Service",
+							JOptionPane.YES_NO_OPTION
+							);
+					if(retour == 0) {
+						//suppression du client de la base 
+						String libelle = (String) unTableau.getValueAt(numLigne, 0);
+						C_Categorie.deleteCategorie(libelle);
+						
+						//suppression de la ligne dans le tableau
+						unTableau.supprimerLigne(numLigne);
+					}
+				}
+				
+			}
+		});		
+		this.add(panelTable);
 	}
 	
 	public Object [][] obtenirCategories() {

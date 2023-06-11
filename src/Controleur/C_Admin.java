@@ -10,8 +10,15 @@ public class C_Admin {
 		ModeleAdmin.insertAdmin(unAdmin);
 	}
 	
+	public static void deleteAdmin(String nom, String email) {
+		ModeleAdmin.deleteAdmin(nom, email);
+		
+	}
+	
 	public static ArrayList<Admin> selectAllAdmin() {
 		return ModeleAdmin.selectAllAdmin();
 	}
+
+
 
 }

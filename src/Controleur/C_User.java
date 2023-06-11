@@ -1,5 +1,7 @@
 package Controleur;
 
+import java.util.ArrayList;
+
 import Modele.ModeleUser;
 
 public class C_User {
@@ -10,6 +12,14 @@ public class C_User {
 		// on controle les données 
 		
 		return ModeleUser.selectWhereUser(email, mdp);
+		
+	}
+	
+	public static ArrayList<User> selectAllUser() {
+		
+		// on controle les données 
+		
+		return ModeleUser.selectAllUser();
 		
 	}
 }

@@ -27,7 +27,7 @@ public class Services {
 		this.idtypeservice = idtypeservice;
 	}
 
-	public Services(TypeService unTypeService) {
+	public Services(TypesServices unTypeService) {
 		this.idservice = 0;
 		this.libelle = "";
 		this.adresse = "";

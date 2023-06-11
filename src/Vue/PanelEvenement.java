@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -56,7 +58,17 @@ public class PanelEvenement extends PanelPrincipal implements ActionListener {
 	private String[] btText = {"Annuler", "Valider"};
 	private String[] entetes = {"TYPE", "DATE EVENT", "NOM EVENT", "DESCRIPTION", "ADRESSE", "HORRAIRE DEBUT", "HORRAIRE FIN", "CAPACITE", "ID CATEGORIE"};
 	
-	public PanelEvenement() {
+	
+	private static PanelEvenement instance;
+	
+	public static PanelEvenement getInstance() {
+		if(instance == null) {
+			instance = new PanelEvenement();
+		}
+		return instance;
+	}
+	
+	private PanelEvenement() {
 		super(new Color(255, 255, 255));
 		
 		this.panelEvenement.setBounds(30, 50, 350, 400);
@@ -150,6 +162,58 @@ public class PanelEvenement extends PanelPrincipal implements ActionListener {
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		unScroll.setBounds(0, 0, 600, 350);
 		this.panelTable.add(unScroll);
+		this.tableEvent.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int numLigne;
+				if(e.getClickCount() == 2) {
+					numLigne = tableEvent.getSelectedRow();
+					int retour = JOptionPane.showConfirmDialog(null,
+							"Voulez-vous supprimer ce Service ", 
+							"suppresion Service",
+							JOptionPane.YES_NO_OPTION
+							);
+					if(retour == 0) {
+						//suppression du client de la base 
+						String type = (String) unTableau.getValueAt(numLigne, 0);
+						String nomEvent = (String) unTableau.getValueAt(numLigne, 2);
+						String horraireD = (String) unTableau.getValueAt(numLigne, 5);
+						String horraireF = (String) unTableau.getValueAt(numLigne, 6);
+						
+						C_Evenement.deleteEvent(type, nomEvent, horraireD, horraireF);
+						
+						//suppression de la ligne dans le tableau
+						unTableau.supprimerLigne(numLigne);
+					}
+				}
+				
+			}
+		});
 		this.add(panelTable);
 	}
 	

@@ -11,6 +11,16 @@ public class C_ClientPro {
 		ModeleClientPro.insertClientPro(unClientPro);
 	}
 	
+	public static int selectIdPro(String nom, String email, String tel, String siret) {
+		
+		return ModeleClientPro.selectIdPro(nom, email, tel, siret);
+	}
+	
+	public static void deleteClientPro(int iduser) {
+		
+		ModeleClientPro.deleteClientPro(iduser);
+	}
+	
 	public static ArrayList<ClientPro> selectAllClientPro() {
 		return ModeleClientPro.selectAllClientPro();
 	}

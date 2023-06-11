@@ -17,16 +17,17 @@ public class VueGenerale extends JFrame implements ActionListener {
 
 	private JPanel panelMenu = new JPanel();
 	
-	private JButton[] buttons = new JButton[7];
-	private String[] buttonNames = {"btAdmin", "btClientPart", "btClientPro", "btCategorie", "btEvenement", "btServices", "btQuitter"};
-	private String[] buttonText = {"Administrateurs", "Clients Particulier", "Clients Pro", "Catégories", "Évènement", "Autre Services", "Quitter"};
+	private JButton[] buttons = new JButton[8];
+	private String[] buttonNames = {"btAdmin", "btClientPart", "btClientPro", "btCategorie", "btEvenement", "btServices", "btTypesServices","btQuitter"};
+	private String[] buttonText = {"Administrateurs", "Clients Particulier", "Clients Pro", "Catégories", "Évènement", "Autre Services", "Types Services", "Quitter"};
 	
-	private static PanelAdmin unPanelAdmin = new PanelAdmin();
-	private static PanelClientPart unPanelClientPart = new PanelClientPart();
-	private static PanelClientPro unPanelClientPro = new PanelClientPro();
-	private static PanelCategorie unPanelCategorie = new PanelCategorie();
-	private static PanelEvenement unPanelEvenement = new PanelEvenement();
-	private static PanelServices unPanelServices = new PanelServices();
+	PanelAdmin unPanelAdmin = PanelAdmin.getInstance();
+	PanelClientPart unPanelClientPart = PanelClientPart.getInstance();
+	PanelClientPro unPanelClientPro = PanelClientPro.getInstance();
+	PanelCategorie unPanelCategorie = PanelCategorie.getInstance();
+	PanelEvenement unPanelEvenement = PanelEvenement.getInstance();
+	PanelServices unPanelServices = PanelServices.getInstance();
+	PanelTypesServices unPanelTypesServices = PanelTypesServices.getInstance();
 
 	private static VueGenerale instance;
 	
@@ -36,7 +37,7 @@ public class VueGenerale extends JFrame implements ActionListener {
 		}
 		return instance;
 	}
-
+	
 	private VueGenerale() {
 
 		this.setTitle("Gestion des JO 2024");
@@ -47,7 +48,7 @@ public class VueGenerale extends JFrame implements ActionListener {
 		
 		// construction du panel menu
 		this.panelMenu.setBounds(100, 40, 1100, 60);
-		this.panelMenu.setLayout(new GridLayout(1, 7));
+		this.panelMenu.setLayout(new GridLayout(1, 8));
 		this.panelMenu.setBackground(new Color(255, 255, 204));
 		
 		for (int i = 0; i < buttons.length; i++) {
@@ -69,6 +70,7 @@ public class VueGenerale extends JFrame implements ActionListener {
 		this.add(unPanelCategorie);
 		this.add(unPanelEvenement);
 		this.add(unPanelServices);
+		this.add(unPanelTypesServices);
 
 		this.setVisible(false);
 
@@ -81,6 +83,7 @@ public class VueGenerale extends JFrame implements ActionListener {
 		unPanelCategorie.setVisible(false);
 		unPanelEvenement.setVisible(false);
 		unPanelServices.setVisible(false);
+		unPanelTypesServices.setVisible(false);
 		
 		switch(choix) {
 		case 1: unPanelClientPart.setVisible(true); break;
@@ -89,6 +92,7 @@ public class VueGenerale extends JFrame implements ActionListener {
 		case 4: unPanelEvenement.setVisible(true); break;
 		case 5: unPanelAdmin.setVisible(true); break;
 		case 6: unPanelServices.setVisible(true); break;
+		case 7: unPanelTypesServices.setVisible(true); break;
 		}
 		
 	}
@@ -115,6 +119,9 @@ public class VueGenerale extends JFrame implements ActionListener {
 			break;
 		case "btServices":
 			this.activerPanelPrincipal(6);
+			break;
+		case "btTypesServices":
+			this.activerPanelPrincipal(7);
 			break;
 			
 			

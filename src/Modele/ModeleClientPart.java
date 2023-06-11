@@ -32,8 +32,23 @@ public class ModeleClientPart extends ModeleUser {
 		}
 	}
 	
+	
+	public static void deleteClientPart(int iduser) {
+		String req = "CALL deleteClientPar('" + iduser + "');";
+		
+		try {
+			uneBdd.seConnecter();
+			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			unStat.execute(req);
+			unStat.close();
+			uneBdd.seDeconnecter();
+		} catch(SQLException exp) {
+			System.out.println("Erreur d'execution de : " + req);
+		}
+	}
+	
 	public static ArrayList<ClientPart> selectAllClientPart() {
-		String req = "SELECT * FROM vueclientpart;";
+		String req = "SELECT * FROM vueClientPart;";
 		ArrayList<ClientPart> lesClientsPart = new ArrayList<ClientPart>();
 		
 		try {
@@ -61,5 +76,30 @@ public class ModeleClientPart extends ModeleUser {
 			System.out.println(e.getMessage());
 		}
 		return lesClientsPart;
+	}
+	
+	public static int selectIdPart(String nom, String prenom, String email, String tel) {
+		String req = "SELECT iduser FROM vueClientPart WHERE "
+				+ "nom='"+nom+"' AND "
+						+ "prenom='"+prenom+"' AND "
+								+ "email='"+email+"' AND "
+										+ "tel='"+tel+"';";
+		int id = 0;
+		
+		try {
+			uneBdd.seConnecter();
+			Statement unStat = uneBdd.getMaConnexion().createStatement();
+			ResultSet unResulat = unStat.executeQuery(req);
+			
+			if(unResulat.next()) {				
+				id = unResulat.getInt("iduser");
+			}
+			
+			unStat.close();
+			uneBdd.seDeconnecter();
+		} catch(SQLException exp) {
+			System.out.println("Erreur d'execution de : " + req);
+		}	
+		return id;
 	}
 }

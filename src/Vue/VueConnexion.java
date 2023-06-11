@@ -111,7 +111,7 @@ public class VueConnexion extends JFrame implements ActionListener, KeyListener 
 		} else {
 			User unUser = C_User.selectWhereUser(email, mdp);
 			if (unUser == null) {
-				JOptionPane.showMessageDialog(this, "Veuillez vérifier vos identifiants", "erreur de connexion",
+				JOptionPane.showMessageDialog(this, "Veuillez vérifier vos identifiants d'administrateur", "erreur de connexion",
 						JOptionPane.ERROR_MESSAGE);
 			} else {
 				JOptionPane.showMessageDialog(this, "Bienvenue MME/M" + unUser.getNom());
